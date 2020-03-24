@@ -87,16 +87,6 @@ public class ProductsTest {
 
 	@Sql("classpath:/sqls/products.sql")
 	@Test
-	public void testUpdateProductsEmpty() throws Exception{
-		mvc.perform(patch(URL + "/A1")
-				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-				.content("{}"))
-				.andExpect(status().isBadRequest())
-				.andExpect(content().json("{\"message\": \"Inform description or/and price properties\"}"));
-	}
-
-	@Sql("classpath:/sqls/products.sql")
-	@Test
 	public void testUpdateProduct() throws Exception{
 		mvc.perform(patch(URL + "/A1" )
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -135,6 +125,16 @@ public class ProductsTest {
 		Product product = repository.findOne("A1");
 		assertEquals("Pen",product.getDescription());
 		assertEquals(1,product.getPrice().compareTo(new BigDecimal(9.87)));
+	}
+
+	@Sql("classpath:/sqls/products.sql")
+	@Test
+	public void testUpdateProductsEmpty() throws Exception{
+		mvc.perform(patch(URL + "/A1")
+				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.content("{}"))
+				.andExpect(status().isBadRequest())
+				.andExpect(content().json("{\"message\": \"Inform description or/and price properties\"}"));
 	}
 
 

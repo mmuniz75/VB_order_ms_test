@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class OrderRequestDTO {
+public class OrderRequest {
 
 
 }
