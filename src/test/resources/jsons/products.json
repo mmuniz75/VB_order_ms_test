@@ -1,0 +1,17 @@
+[
+  {
+    "id": "A1",
+    "description": "Pen",
+    "price": 10.12
+  },
+  {
+    "id": "A2",
+    "description": "Notepad",
+    "price": 30.12
+  },
+  {
+    "id": "A3",
+    "description": "Eraser",
+    "price": 25.23
+  }
+]
