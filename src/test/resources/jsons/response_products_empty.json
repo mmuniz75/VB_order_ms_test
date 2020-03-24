@@ -1,0 +1,8 @@
+{
+  "message": "Invalid request",
+  "errors": [
+    "description: may not be empty",
+    "id: may not be empty",
+    "price: may not be null"
+  ]
+}
