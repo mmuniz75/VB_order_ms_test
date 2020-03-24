@@ -18,8 +18,6 @@ import java.math.BigDecimal;
 
 import static com.muniz.vb.orders.TestUtils.readJson;
 import static org.junit.Assert.*;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doAnswer;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -49,12 +47,12 @@ public class ProductsTest {
 		mvc.perform(get(URL))
             .andExpect(status().isOk())
 			.andExpect(content().json(readJson("response_products.json")));
-		repository.deleteAll();
 	}
 
 
 	@Test
 	public void testAddProducts() throws Exception{
+		repository.deleteAll();
 		mvc.perform(post(URL)
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
 		        .content(readJson("request_product.json")))
@@ -83,9 +81,39 @@ public class ProductsTest {
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
 				.content(readJson("request_product.json")))
 				.andExpect(status().isConflict())
-				.andExpect(content().json(readJson("response_products_conflict.json")));
-		repository.deleteAll();
+				.andExpect(content().json("{\"message\": \"Product already exists!\"}"));
 
 	}
+
+	@Sql("classpath:/sqls/products.sql")
+	@Test
+	public void testUpdateProductsEmpty() throws Exception{
+		mvc.perform(patch(URL + "/A1")
+				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.content("{}"))
+				.andExpect(status().isBadRequest())
+				.andExpect(content().json("{\"message\": \"Inform description or/and price properties\"}"));
+	}
+
+	@Test
+	public void testUpdateProductsNotFound() throws Exception{
+		mvc.perform(patch(URL + "/A4")
+				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.content(readJson("request_update_product.json")))
+				.andExpect(status().isNotFound())
+				.andExpect(content().json("{\"message\": \"Product not found!\"}"));
+	}
+
+	@Sql("classpath:/sqls/products.sql")
+	@Test
+	public void testUpdateProductsNoChange() throws Exception{
+		mvc.perform(patch(URL + "/A1")
+				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.content(readJson("request_product.json")))
+				.andExpect(status().isBadRequest())
+				.andExpect(content().json("{\"message\": \"The current values is the same of the product\"}"));
+
+	}
+
 
 }

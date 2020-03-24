@@ -1,6 +1,7 @@
 package com.muniz.vb.orders.resources;
 
 import com.muniz.vb.orders.domain.Product;
+import com.muniz.vb.orders.dto.ProductRequest;
 import com.muniz.vb.orders.exception.APIException;
 import com.muniz.vb.orders.service.ProductService;
 import io.swagger.annotations.Api;
@@ -37,6 +38,17 @@ public class ProductResource {
   @ResponseStatus(value = HttpStatus.OK)
   public List<Product> listProducts() throws APIException {
     return service.listProducts();
+  }
+
+  @ApiOperation(value = "Update product's fields", httpMethod = "PATCH")
+  @ApiResponses(value = {@ApiResponse(code = 200, message = "Product field updated"),
+          @ApiResponse(code = 404, message = "Product not found"),
+          @ApiResponse(code = 400, message = "Missing parameters in request")})
+  @PatchMapping("/{id}")
+  @ResponseStatus(value = HttpStatus.OK)
+  public void updateProduct(@PathVariable final String id,
+                            @RequestBody(required = true) final ProductRequest request) throws APIException {
+    service.updateProduct(id,request);
   }
 
 }
