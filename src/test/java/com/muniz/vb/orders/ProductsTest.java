@@ -95,6 +95,49 @@ public class ProductsTest {
 				.andExpect(content().json("{\"message\": \"Inform description or/and price properties\"}"));
 	}
 
+	@Sql("classpath:/sqls/products.sql")
+	@Test
+	public void testUpdateProduct() throws Exception{
+		mvc.perform(patch(URL + "/A1" )
+				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.content(readJson("request_update_product.json")))
+				.andExpect(status().isOk())
+		;
+
+		Product product = repository.findOne("A1");
+		assertEquals("Pen updated",product.getDescription());
+		assertEquals(1,product.getPrice().compareTo(new BigDecimal(34.26)));
+	}
+
+	@Sql("classpath:/sqls/products.sql")
+	@Test
+	public void testUpdateProductDescription() throws Exception{
+		mvc.perform(patch(URL + "/A1" )
+				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.content("{\"description\": \"New description\"}"))
+				.andExpect(status().isOk())
+		;
+
+		Product product = repository.findOne("A1");
+		assertEquals("New description",product.getDescription());
+		assertEquals(1,product.getPrice().compareTo(new BigDecimal(10.12)));
+	}
+
+	@Sql("classpath:/sqls/products.sql")
+	@Test
+	public void testUpdateProductPrice() throws Exception{
+		mvc.perform(patch(URL + "/A1" )
+				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.content("{\"price\": 9.87}"))
+				.andExpect(status().isOk())
+		;
+
+		Product product = repository.findOne("A1");
+		assertEquals("Pen",product.getDescription());
+		assertEquals(1,product.getPrice().compareTo(new BigDecimal(9.87)));
+	}
+
+
 	@Test
 	public void testUpdateProductsNotFound() throws Exception{
 		mvc.perform(patch(URL + "/A4")
