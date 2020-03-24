@@ -1,0 +1,31 @@
+spring:
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
+  datasource:
+    continue-on-error: true
+    url: jdbc:h2:mem:ordersdb
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    generate-ddl: true
+    show-sql: true
+
+server:
+  connection-timeout: 300000
+  session.timeout: 300000
+  context-path: /api/vb
+
+management:
+  security:
+    enabled: false
+
+endpoints:
+  enabled: false
+  health:
+    enabled: true
