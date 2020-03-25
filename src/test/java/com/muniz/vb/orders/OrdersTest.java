@@ -53,7 +53,7 @@ public class OrdersTest {
 	@Test
 	@Sql("classpath:/sqls/orders.sql")
 	public void testListProducts() throws Exception{
-		mvc.perform(get(URL))
+		mvc.perform(get(URL + "?startDate=2020-03-25&endDate=2020-03-25"))
             .andExpect(status().isOk())
 			.andExpect(content().json(readJson("/orders/response.json")));
 	}

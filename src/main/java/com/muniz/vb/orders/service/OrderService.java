@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -66,8 +67,8 @@ public class OrderService {
 
   }
 
-  public List<Order> listOrders() throws APIException {
-    return repository.findAll();
+  public List<Order> listOrders(LocalDate startDate, LocalDate endDate) throws APIException {
+    return repository.findByCreationDateBetween(startDate.atStartOfDay(),endDate.plusDays(1).atStartOfDay().minusSeconds(1));
 
   }
 

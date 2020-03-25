@@ -12,10 +12,12 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -39,8 +41,9 @@ public class OrderResource {
   @ApiResponses(value = {@ApiResponse(code = 200, message = "List of orders")})
   @GetMapping
   @ResponseStatus(value = HttpStatus.OK)
-  public List<Order> listOrders() throws APIException {
-    return service.listOrders();
+  public List<Order> listOrders(@RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) throws APIException {
+    return service.listOrders(startDate,endDate);
   }
 
 
