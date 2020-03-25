@@ -8,9 +8,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -25,6 +27,7 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(Exception.class)
   @ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
   protected void processException(final Exception ex) {
+
     logE(ex);
   }
 
@@ -46,6 +49,21 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
   }
 
+  @ExceptionHandler(MissingServletRequestParameterException.class)
+  public ResponseEntity<ErrorMessage> handleMissingServletRequestParameterException(final MissingServletRequestParameterException ex) {
+    return this.sendMessage(ex);
+  }
+
+  @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+  public ResponseEntity<ErrorMessage> handleMethodArgumentTypeMismatchException(final MethodArgumentTypeMismatchException ex) {
+    return this.sendMessage(ex);
+  }
+
+  private ResponseEntity<ErrorMessage> sendMessage(final Exception ex){
+    logE(ex);
+    final ErrorMessage errorMessage = new ErrorMessage(ex.getMessage());
+    return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
+  }
 
   private static void logE(final Exception e) {
 

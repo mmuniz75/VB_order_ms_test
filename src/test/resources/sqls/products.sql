@@ -1,3 +1,5 @@
+delete from order_item;
+delete from _order;
 delete from product;
 insert into product (id,description,price) values ('A1', 'Pen', 10.12);
 insert into product (id,description,price) values ('A2', 'Notepad', 30.12);

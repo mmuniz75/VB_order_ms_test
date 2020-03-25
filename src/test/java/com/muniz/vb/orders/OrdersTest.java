@@ -53,7 +53,7 @@ public class OrdersTest {
 
 	@Test
 	@Sql("classpath:/sqls/orders.sql")
-	public void testListProducts() throws Exception{
+	public void testListOrders() throws Exception{
 		mvc.perform(get(URL + "?startDate=2020-03-25&endDate=2020-03-25"))
             .andExpect(status().isOk())
 			.andExpect(content().json(readJson("/orders/response.json")));
@@ -61,7 +61,7 @@ public class OrdersTest {
 
 	@Test
 	@Sql("classpath:/sqls/orders.sql")
-	public void testListProducts2() throws Exception{
+	public void testListOrders2() throws Exception{
 		mvc.perform(get(URL + "?startDate=2020-03-24&endDate=2020-03-25"))
 			.andExpect(status().isOk())
 			.andExpect(jsonPath("$", hasSize(2)))
@@ -72,7 +72,7 @@ public class OrdersTest {
 
 	@Test
 	@Sql("classpath:/sqls/orders.sql")
-	public void testListProducts3() throws Exception{
+	public void testListOrders3() throws Exception{
 		mvc.perform(get(URL + "?startDate=2020-03-25&endDate=2020-03-26"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$", hasSize(2)))
@@ -83,10 +83,49 @@ public class OrdersTest {
 
 	@Test
 	@Sql("classpath:/sqls/orders.sql")
+	public void testListOrders4() throws Exception{
+		mvc.perform(get(URL + "?startDate=2020-03-24&endDate=2020-03-26"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$", hasSize(3)))
+		;
+	}
+
+	@Test
+	public void testListMissingDates() throws Exception{
+		mvc.perform(get(URL))
+				.andExpect(status().isBadRequest())
+				.andExpect(content().json("{\"message\": \"Required LocalDate parameter 'startDate' is not present\"}"));
+		;
+	}
+
+	@Test
+	public void testListInvalidDate() throws Exception{
+		mvc.perform(get(URL + "?startDate=2020&endDate=2020-03-26"))
+				.andExpect(status().isBadRequest())
+		;
+	}
+
+	@Test
+	public void testListInvalidDate2() throws Exception{
+		mvc.perform(get(URL + "?startDate=2020-03-26&endDate=2020"))
+				.andExpect(status().isBadRequest())
+		;
+	}
+
+	@Test
+	@Sql("classpath:/sqls/orders.sql")
 	public void testListProducts4() throws Exception{
 		mvc.perform(get(URL + "?startDate=2020-03-24&endDate=2020-03-26"))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("$", hasSize(3)))
+		;
+	}
+
+	@Test
+	public void testListMissingEndDate() throws Exception{
+		mvc.perform(get(URL + "?startDate=2020-03-25"))
+				.andExpect(status().isBadRequest())
+				.andExpect(content().json("{\"message\": \"Required LocalDate parameter 'endDate' is not present\"}"));
 		;
 	}
 
