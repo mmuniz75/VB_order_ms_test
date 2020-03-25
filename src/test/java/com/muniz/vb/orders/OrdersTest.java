@@ -22,11 +22,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.muniz.vb.orders.TestUtils.readJson;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -56,6 +57,37 @@ public class OrdersTest {
 		mvc.perform(get(URL + "?startDate=2020-03-25&endDate=2020-03-25"))
             .andExpect(status().isOk())
 			.andExpect(content().json(readJson("/orders/response.json")));
+	}
+
+	@Test
+	@Sql("classpath:/sqls/orders.sql")
+	public void testListProducts2() throws Exception{
+		mvc.perform(get(URL + "?startDate=2020-03-24&endDate=2020-03-25"))
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$", hasSize(2)))
+			.andExpect(jsonPath("$[0].creationDate", is("2020-03-24 23:59:59")))
+			.andExpect(jsonPath("$[1].creationDate", is("2020-03-25 11:35:49")))
+		;
+	}
+
+	@Test
+	@Sql("classpath:/sqls/orders.sql")
+	public void testListProducts3() throws Exception{
+		mvc.perform(get(URL + "?startDate=2020-03-25&endDate=2020-03-26"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$", hasSize(2)))
+				.andExpect(jsonPath("$[0].creationDate", is("2020-03-25 11:35:49")))
+				.andExpect(jsonPath("$[1].creationDate", is("2020-03-26 00:00:00")))
+		;
+	}
+
+	@Test
+	@Sql("classpath:/sqls/orders.sql")
+	public void testListProducts4() throws Exception{
+		mvc.perform(get(URL + "?startDate=2020-03-24&endDate=2020-03-26"))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("$", hasSize(3)))
+		;
 	}
 
 
