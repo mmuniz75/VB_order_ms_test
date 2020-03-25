@@ -2,12 +2,12 @@
   {
     "id": 1,
     "buyerEmail": "marcelo@gmail.com",
-    "creationDate": "2020-03-25 10:14:41",
-    "total": 146.05,
+    "creationDate": "2020-03-25 11:35:49",
+    "total": 156.25,
     "items": [
       {
         "id": 1,
-        "price": 10.12,
+        "price": 20.32,
         "amount": 1,
         "product": {
           "id": "A1",

@@ -50,7 +50,7 @@ public class OrdersTest {
 		this.mvc = MockMvcBuilders.webAppContextSetup(context).build();
 	}
 
-	//@Test
+	@Test
 	@Sql("classpath:/sqls/orders.sql")
 	public void testListProducts() throws Exception{
 		mvc.perform(get(URL))
