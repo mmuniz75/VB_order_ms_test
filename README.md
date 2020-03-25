@@ -22,7 +22,7 @@ The steps to install are :
  cd target
 ```
 ```bash
- java -jar recruting-test.jar
+ java -jar orders-api.jar
 ```
 
 ## Documentation
