@@ -46,7 +46,7 @@ public class ProductsTest {
 	public void testListProducts() throws Exception{
 		mvc.perform(get(URL))
             .andExpect(status().isOk())
-			.andExpect(content().json(readJson("response_products.json")));
+			.andExpect(content().json(readJson("products/response_products.json")));
 	}
 
 
@@ -55,7 +55,7 @@ public class ProductsTest {
 		repository.deleteAll();
 		mvc.perform(post(URL)
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-		        .content(readJson("request_product.json")))
+		        .content(readJson("products/request_product.json")))
 				.andExpect(status().isCreated())
 				;
 
@@ -70,7 +70,7 @@ public class ProductsTest {
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
 				.content("{}"))
 				.andExpect(status().isBadRequest())
-                .andExpect(content().json(readJson("response_products_empty.json")));
+                .andExpect(content().json(readJson("products/response_products_empty.json")));
 
 	}
 
@@ -79,7 +79,7 @@ public class ProductsTest {
 	public void testAddProductsConflict() throws Exception{
 		mvc.perform(post(URL)
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-				.content(readJson("request_product.json")))
+				.content(readJson("products/request_product.json")))
 				.andExpect(status().isConflict())
 				.andExpect(content().json("{\"message\": \"Product already exists!\"}"));
 
@@ -90,7 +90,7 @@ public class ProductsTest {
 	public void testUpdateProduct() throws Exception{
 		mvc.perform(patch(URL + "/A1" )
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-				.content(readJson("request_update_product.json")))
+				.content(readJson("products/request_update_product.json")))
 				.andExpect(status().isOk())
 		;
 
@@ -142,7 +142,7 @@ public class ProductsTest {
 	public void testUpdateProductsNotFound() throws Exception{
 		mvc.perform(patch(URL + "/A4")
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-				.content(readJson("request_update_product.json")))
+				.content(readJson("products/request_update_product.json")))
 				.andExpect(status().isNotFound())
 				.andExpect(content().json("{\"message\": \"Product not found!\"}"));
 	}
@@ -152,7 +152,7 @@ public class ProductsTest {
 	public void testUpdateProductsNoChange() throws Exception{
 		mvc.perform(patch(URL + "/A1")
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-				.content(readJson("request_product.json")))
+				.content(readJson("products/request_product.json")))
 				.andExpect(status().isBadRequest())
 				.andExpect(content().json("{\"message\": \"The current values is the same of the product\"}"));
 

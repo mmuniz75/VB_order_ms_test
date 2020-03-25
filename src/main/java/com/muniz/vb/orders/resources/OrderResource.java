@@ -26,7 +26,7 @@ public class OrderResource {
   @Autowired
   private OrderService service;
 
-  @ApiOperation(value = "Create a order", httpMethod = "POST")
+  @ApiOperation(value = "Place a order", httpMethod = "POST")
   @ApiResponses(value = {@ApiResponse(code = 201, message = "Order created"),
       @ApiResponse(code = 400, message = "Missing parameters in request")})
   @PostMapping

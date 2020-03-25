@@ -34,7 +34,7 @@ public class Order {
 
   private BigDecimal total;
 
-  @OneToMany
+  @OneToMany(cascade = CascadeType.ALL)
   @JoinColumn(name="order_id")
   @Fetch(value = FetchMode.JOIN)
   private List<OrderItem> items;
