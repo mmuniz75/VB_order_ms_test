@@ -2,6 +2,7 @@
 package com.muniz.vb.orders.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.Email;

@@ -7,10 +7,7 @@ import com.muniz.vb.orders.dto.ProductRequest;
 import com.muniz.vb.orders.exception.APIException;
 import com.muniz.vb.orders.service.OrderService;
 import com.muniz.vb.orders.service.ProductService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -41,8 +38,12 @@ public class OrderResource {
   @ApiResponses(value = {@ApiResponse(code = 200, message = "List of orders")})
   @GetMapping
   @ResponseStatus(value = HttpStatus.OK)
-  public List<Order> listOrders(@RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
-                                @RequestParam(required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) throws APIException {
+  public List<Order> listOrders(@RequestParam(required = true)
+                                @ApiParam(value="Order's start date to filter on format YYYY-MM-DD")
+                                @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                @RequestParam(required = true)
+                                @ApiParam(value="Order's end date to filter on format YYYY-MM-DD")
+                                @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) throws APIException {
     return service.listOrders(startDate,endDate);
   }
 

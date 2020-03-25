@@ -2,6 +2,8 @@
 package com.muniz.vb.orders.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,6 +34,7 @@ public class Order {
   private String buyerEmail;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+  @ApiModelProperty(dataType = "java.lang.String")
   private LocalDateTime creationDate;
 
   private BigDecimal total;
