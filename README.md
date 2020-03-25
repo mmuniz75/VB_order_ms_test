@@ -4,7 +4,7 @@ This API manage products and place orders
 
 ## Installation
 
-The installation require [Git](https://git-scm.com/) and 
+The installation requires [Git](https://git-scm.com/) and 
 [Apache Maven](https://maven.apache.org/).
 
 The steps to install are :
@@ -35,9 +35,9 @@ has all API's calls examples
 
 
 ## Redundancy
-This microservice can be created as a docker image and deploy in
+This microservice can be created as a docker's image and deployed in
 a Kubernet's server where Pods can be create to attempt the demand
 
 ## Authentication
 The gateway that router this APIs should expected in the http
-header a token where the authorization is checked in a security server
+header a token where the authorization is checked on a security server
