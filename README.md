@@ -34,10 +34,10 @@ The postman file [orders.postman_collection.json](https://www.getpostman.com/col
 has all API's calls examples
 
 
-##Redundancy
+## Redundancy
 This microservice can be created as a docker image and deploy in
 a Kubernet's server where Pods can be create to attempt the demand
 
-##Authentication
+## Authentication
 The gateway that router this APIs should expected in the http
 header a token where the authorization is checked in a security server
