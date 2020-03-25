@@ -1,0 +1,6 @@
+{
+  "message": "Invalid request",
+  "errors": [
+    "buyerEmail: not a well-formed email address"
+  ]
+}

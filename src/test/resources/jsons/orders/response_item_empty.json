@@ -1,0 +1,7 @@
+{
+  "message": "Invalid request",
+  "errors": [
+    "products[0].amount: may not be null",
+    "products[0].productId: may not be empty"
+  ]
+}

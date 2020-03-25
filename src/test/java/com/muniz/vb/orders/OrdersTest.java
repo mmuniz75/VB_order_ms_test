@@ -55,7 +55,7 @@ public class OrdersTest {
 	public void testListProducts() throws Exception{
 		mvc.perform(get(URL))
             .andExpect(status().isOk())
-			.andExpect(content().json(readJson("/orders/response_orders.json")));
+			.andExpect(content().json(readJson("/orders/response.json")));
 	}
 
 
@@ -68,7 +68,7 @@ public class OrdersTest {
 		repository.deleteAll();
 		mvc.perform(post(URL)
 				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-		        .content(readJson("orders/request_order.json")))
+		        .content(readJson("orders/request.json")))
 				.andExpect(status().isCreated())
 				;
 
@@ -93,6 +93,46 @@ public class OrdersTest {
 		assertEquals("25.23",items.get(2).getPrice().toString());
 		assertEquals("A3",items.get(2).getProduct().getId());
 
+	}
+
+	@Test
+	public void testPlaceOrderMissingProduct() throws Exception{
+		repository.deleteAll();
+		productRepository.deleteAll();
+
+		mvc.perform(post(URL)
+				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.content(readJson("orders/request.json")))
+				.andExpect(status().isPreconditionFailed())
+				.andExpect(content().json("{\"message\": \"Product A1 not exists!\"}"));
+		;
+	}
+
+	@Test
+	public void testPlaceOrderInvalidEmail() throws Exception{
+		this.testBadRequest("orders/request_invalid_email.json",
+				           "orders/response_invalid_email.json");
+	}
+
+	@Test
+	public void testPlaceOrderEmpty() throws Exception{
+		this.testBadRequest("empty.json",
+				"orders/response_empty.json");
+	}
+
+	@Test
+	public void testPlaceItemEmpty() throws Exception{
+		this.testBadRequest("orders/request_item_empty.json",
+				"orders/response_item_empty.json");
+	}
+
+	private void testBadRequest(String request,String response) throws Exception{
+		mvc.perform(post(URL)
+				.contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+				.content(readJson(request)))
+				.andExpect(status().isBadRequest())
+				.andExpect(content().json(readJson(response)))
+		;
 	}
 
 	private void updateProductPrice(){

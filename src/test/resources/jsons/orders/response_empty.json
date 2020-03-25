@@ -1,0 +1,7 @@
+{
+  "message": "Invalid request",
+  "errors": [
+    "buyerEmail: may not be empty",
+    "products: may not be empty"
+  ]
+}

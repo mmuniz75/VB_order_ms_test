@@ -1,0 +1,40 @@
+[
+  {
+    "id": 1,
+    "buyerEmail": "marcelo@gmail.com",
+    "creationDate": "2020-03-25 10:14:41",
+    "total": 146.05,
+    "items": [
+      {
+        "id": 1,
+        "price": 10.12,
+        "amount": 1,
+        "product": {
+          "id": "A1",
+          "description": "Pen Special",
+          "price": 20.32
+        }
+      },
+      {
+        "id": 2,
+        "price": 30.12,
+        "amount": 2,
+        "product": {
+          "id": "A2",
+          "description": "Notepad",
+          "price": 30.12
+        }
+      },
+      {
+        "id": 3,
+        "price": 25.23,
+        "amount": 3,
+        "product": {
+          "id": "A3",
+          "description": "Eraser",
+          "price": 25.23
+        }
+      }
+    ]
+  }
+]

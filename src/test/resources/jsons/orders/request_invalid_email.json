@@ -1,0 +1,14 @@
+{
+  "buyerEmail" : "marcelogmail.com",
+  "products" : [
+      { "id" : "A1",
+        "amount" : 1
+      },
+      { "id" : "A2",
+        "amount" : 2
+      },
+      { "id" : "A3",
+        "amount" : 3
+      }
+  ]
+}
